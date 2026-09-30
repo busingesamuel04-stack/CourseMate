@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ISBATERP - Student Dashboard</title>
+    <link href="../Css/Main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form method="post" action="./frmStudentHome.aspx" id="form1">
+        <div class="header-container">
+            <div class="user-info-panel">
+                <span id="ctl00_Content_lblStudentName" class="user-name">Alex Tumusiime</span>
+                <span id="ctl00_Content_lblRegNo" class="user-reg">IU/2023/BCS/1042</span>
+                <span id="ctl00_Content_lblCourse" class="user-program">Bachelor of Science in Computer Science (BCS)</span>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Student Financial Overview Card -->
+            <div id="fee-section" class="widget-box">
+                <h3>Student Fee Ledger Summary</h3>
+                <div class="fee-card">
+                    <table class="fee-summary-table" style="width: 100%;">
+                        <tr>
+                            <td><strong>Total Billed / Invoiced:</strong></td>
+                            <td><span id="ctl00_Content_lblTotalBilled">UGX 4,200,000</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Amount Paid:</strong></td>
+                            <td><span id="ctl00_Content_lblTotalPaid">UGX 3,500,000</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Outstanding Balance:</strong></td>
+                            <td><span id="ctl00_Content_lblOutstandingBalance" style="color: red; font-weight: bold;">UGX 700,000</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Course Units / Timetable GridView -->
+            <div id="courses-section" class="widget-box">
+                <h3>Registered Course Units &amp; Results</h3>
+                <table class="mGrid" id="ctl00_Content_gvCourseUnits" cellspacing="0" cellpadding="4" border="0">
+                    <tr class="header">
+                        <th scope="col">Course Code</th>
+                        <th scope="col">Course Title</th>
+                        <th scope="col">Credit Units</th>
+                        <th scope="col">Grade</th>
+                    </tr>
+                    <tr>
+                        <td>BCS2101</td>
+                        <td>Data Structures and Algorithms</td>
+                        <td>4.0</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>BCS2102</td>
+                        <td>Database Management Systems</td>
+                        <td>4.0</td>
+                        <td>B+</td>
+                    </tr>
+                    <tr>
+                        <td>BCS2103</td>
+                        <td>Computer Networks and Communication</td>
+                        <td>3.0</td>
+                        <td>A-</td>
+                    </tr>
+                    <tr>
+                        <td>BCS2104</td>
+                        <td>Software Engineering Principles</td>
+                        <td>4.0</td>
+                        <td>B</td>
+                    </tr>
+                    <tr>
+                        <td>BCS2105</td>
+                        <td>Research Methodology &amp; Ethics</td>
+                        <td>3.0</td>
+                        <td>A</td>
+                    </tr>
+                    <tr class="footer">
+                        <td colspan="2">Total Credit Units:</td>
+                        <td>18.0</td>
+                        <td>Semester GPA: 4.40</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>CourseMate - Campus Hub Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+
+  <div class="desktop-viewport-wrapper">
+    <!-- Mobile Device Chassis (Stitch Electric Cobalt Radial Glass Frame) -->
+    <main class="device-chassis" id="app">
+
+      <!-- BEGIN: iOS Status Bar & Dynamic Island -->
+      <div class="device-notch-bar" data-purpose="status-bar">
+        <span class="notch-time">9:41</span>
+        <!-- Dynamic Island Capsule -->
+        <div class="dynamic-island" id="dynamicIsland" title="ISMIS Server Connection Status">
+          <span class="island-pulse" id="islandPulse"></span>
+          <span id="islandStatusText">ISMIS Live</span>
+        </div>
+        <div class="notch-icons">
+          <!-- Cellular -->
+          <svg class="notch-icon" viewBox="0 0 17 12">
+            <rect height="4" rx="0.5" width="2.5" x="0" y="8"></rect>
+            <rect height="6" rx="0.5" width="2.5" x="4" y="6"></rect>
+            <rect height="9" rx="0.5" width="2.5" x="8" y="3"></rect>
+            <rect height="12" rx="0.5" width="2.5" x="12" y="0"></rect>
+          </svg>
+          <!-- Wifi -->
+          <svg class="notch-icon" viewBox="0 0 16 12">
+            <path d="M8 2.5C5.1 2.5 2.5 3.7 0.6 5.6L1.8 6.8C3.4 5.3 5.6 4.3 8 4.3C10.4 4.3 12.6 5.3 14.2 6.8L15.4 5.6C13.5 3.7 10.9 2.5 8 2.5ZM8 6.5C6.3 6.5 4.8 7.2 3.6 8.4L4.8 9.6C5.6 8.8 6.7 8.3 8 8.3C9.3 8.3 10.4 8.8 11.2 9.6L12.4 8.4C11.2 7.2 9.7 6.5 8 6.5ZM8 10.5C7.2 10.5 6.5 11.2 6.5 12H9.5C9.5 11.2 8.8 10.5 8 10.5Z"></path>
+          </svg>
+          <!-- Battery -->
+          <div class="notch-battery">
+            <div class="battery-fill"></div>
+          </div>
+        </div>
+      </div>
+      <!-- END: iOS Status Bar & Dynamic Island -->
+
+      <!-- BEGIN: Stitch Avatar Header Bar -->
+      <header class="app-header" data-purpose="top-app-bar">
+        <div class="header-campus-pill" id="campusPill" title="Switch Cohort / Campus">
+          <div class="campus-avatar">ISB</div>
+          <div class="campus-meta">
+            <h1 class="campus-name">Campus Hub</h1>
+            <p class="campus-cohort" id="headerCohort">HECS26DA • Samuel</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <!-- Live Sync Status Indicator -->
+          <div class="sync-status-indicator synced" id="syncStatusPill" title="ISBAT ISMIS Sync Status">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Synced • HECS26DA</span>
+          </div>
+
+          <!-- Theme Toggle (Dark / Light) -->
+          <button class="icon-btn glass-pill" id="themeToggleBtn" aria-label="Toggle Theme" title="Toggle Theme">
+            <span id="themeToggleIcon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </span>
+          </button>
+        </div>
+      </header>
+      <!-- END: Stitch Avatar Header Bar -->
+
+      <!-- BEGIN: Stitch Horizontal Date & Milestone Strip -->
+      <section class="stitch-date-strip" id="calendarDeadlinesStrip" data-purpose="calendar-deadlines-strip">
+        <div class="strip-header-flex">
+          <span class="strip-title">DEADLINES &amp; MILESTONE DATES</span>
+          <span class="strip-month">Oct 2026</span>
+        </div>
+        <div class="date-chips-scroll no-scrollbar">
+          <!-- Date Chip 1 (Active Exam Mon 28) -->
+          <div class="date-chip active" onclick="document.querySelector('.nav-tab-btn[data-tab=\'schedule\']').click()">
+            <div class="date-chip-day-box">
+              <span class="date-chip-day">MON</span>
+              <span class="date-chip-num">28</span>
+            </div>
+            <div class="date-chip-info">
+              <div class="date-chip-title">HEC1207 Exam</div>
+              <div class="date-chip-sub">2:30 PM • Hall C</div>
+            </div>
+          </div>
+          <!-- Date Chip 2 (Tue 29) -->
+          <div class="date-chip" onclick="document.querySelector('.nav-tab-btn[data-tab=\'schedule\']').click()">
+            <div class="date-chip-day-box">
+              <span class="date-chip-day">TUE</span>
+              <span class="date-chip-num">29</span>
+            </div>
+            <div class="date-chip-info">
+              <div class="date-chip-title">HEC1208 Exam</div>
+              <div class="date-chip-sub">2:30 PM • Block B</div>
+            </div>
+          </div>
+          <!-- Date Chip 3 (Wed 30) -->
+          <div class="date-chip" onclick="document.querySelector('.nav-tab-btn[data-tab=\'financials\']').click()">
+            <div class="date-chip-day-box">
+              <span class="date-chip-day">WED</span>
+              <span class="date-chip-num">30</span>
+            </div>
+            <div class="date-chip-info">
+              <div class="date-chip-title">Tuition Clearance</div>
+              <div class="date-chip-sub">UGX 650,000 Due</div>
+            </div>
+          </div>
+          <!-- Date Chip 4 (Mon 05) -->
+          <div class="date-chip" onclick="document.querySelector('.nav-tab-btn[data-tab=\'feed\']').click()">
+            <div class="date-chip-day-box">
+              <span class="date-chip-day">MON</span>
+              <span class="date-chip-num">05</span>
+            </div>
+            <div class="date-chip-info">
+              <div class="date-chip-title">GUILD Activity Fee</div>
+              <div class="date-chip-sub">Bursar Office</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END: Stitch Horizontal Date & Milestone Strip -->
+
+      <!-- Scrollable Tab Content Container -->
+      <div class="app-content-body no-scrollbar">
+        <!-- Tab 1: Home (Command Center) -->
+        <section class="tab-section active" id="tab-home">
+          <!-- Dynamically Rendered by js/app.js -->
+        </section>
+
+        <!-- Tab 2: Schedule (Smart Timetable & Exam Countdown) -->
+        <section class="tab-section" id="tab-schedule">
+          <!-- Dynamically Rendered by js/app.js -->
+        </section>
+
+        <!-- Tab 3: Assignments (Coursework, Tests & Deadlines Tracker) -->
+        <section class="tab-section" id="tab-assignments">
+          <!-- Dynamically Rendered by js/app.js -->
+        </section>
+
+        <!-- Tab 4: Courses / Modules (Materials Folders & Attendance Radar) -->
+        <section class="tab-section" id="tab-modules">
+          <!-- Dynamically Rendered by js/app.js -->
+        </section>
+
+        <!-- Tab 5: Financials (Fees Ledger & Portal Sync) -->
+        <section class="tab-section" id="tab-financials">
+          <!-- Dynamically Rendered by js/app.js -->
+        </section>
+
+        <!-- Tab 6: Campus Feed & Notices -->
+        <section class="tab-section" id="tab-feed">
+          <!-- Dynamically Rendered by js/app.js -->
+        </section>
+      </div>
+
+      <!-- BEGIN: High-Density Navigation Dock (Linear / Notion Aesthetic) -->
+      <nav class="bottom-nav-bar floating-dock" data-purpose="floating-tab-dock">
+        <button class="nav-tab-btn active" data-tab="home" aria-label="Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Home</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="schedule" aria-label="Schedule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Schedule</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="assignments" aria-label="Assignments">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>Tasks</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="modules" data-alias="courses" aria-label="Courses">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Courses</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="financials" aria-label="Financials">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg>
+          <span>Ledger</span>
+        </button>
+
+        <button class="nav-tab-btn" data-tab="feed" aria-label="Notices">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span>Feed</span>
+        </button>
+      </nav>
+      <!-- END: Floating Navigation Dock -->
+
+      <!-- iOS Bottom Home Bar Indicator -->
+      <div class="ios-home-indicator"></div>
+
+      <!-- Full-Screen Progressive Onboarding Flow (Zero Friction) -->
+      <div class="onboarding-overlay hidden" id="onboardingOverlay">
+        <div>
+          <div class="onboarding-header">
+            <div class="onboarding-logo-badge">CM</div>
+            <div class="onboarding-title">Welcome to CourseMate</div>
+            <div class="onboarding-subtitle">Your personalized, high-trust campus companion for ISBAT University.</div>
+          </div>
+
+          <div class="step-indicator">
+            <div class="step-dot active" id="stepDot1"></div>
+            <div class="step-dot" id="stepDot2"></div>
+          </div>
+
+          <div id="onboardingDynamicContent">
+            <!-- Dynamic step contents rendered by js/app.js -->
+          </div>
+        </div>
+
+        <div>
+          <button class="btn-primary" id="onboardingActionBtn">Next →</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Bottom Sheet Backdrop -->
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+
+  <!-- High-Trust Portal Sync Sheet (Bottom Drawer) -->
+  <aside class="bottom-sheet-drawer" id="portalSyncSheet">
+    <div class="drawer-drag-handle"></div>
+    <div class="sheet-title">Connect ISBAT Portal</div>
+    <div class="sheet-subtitle">Sync your official ISMIS academic grades, timetable &amp; fee clearance.</div>
+
+    <!-- Privacy & Hardware Keystore Guarantee -->
+    <div class="keystore-guarantee-box">
+      <div class="keystore-icon">🛡️</div>
+      <div class="keystore-text">
+        <strong>Hardware-Encrypted Keystore Guarantee:</strong>
+        Your credentials never leave this phone. They are stored directly in your device's secure enclave to sync timetable and exam clearances directly with ISBAT ISMIS.
+      </div>
+    </div>
+
+    <!-- Error Banner inside Drawer -->
+    <div id="syncErrorBanner" class="sync-error-banner" style="display:none;">
+      <div class="error-banner-icon">⚠️</div>
+      <div class="error-banner-text" id="syncErrorMessage">Invalid ISBAT username or password. Please verify your credentials.</div>
+    </div>
+
+    <!-- Sync Credentials Form -->
+    <form id="syncForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="syncUsername">Student Registration / Username</label>
+        <input class="form-input" id="syncUsername" type="text" placeholder="e.g. HECS26DA or IU/2023/..." value="HECS26DA" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="syncPassword">Portal Password</label>
+        <input class="form-input" id="syncPassword" type="password" placeholder="••••••••••••" value="password123" required />
+      </div>
+
+      <div class="form-group-checkbox">
+        <input type="checkbox" id="syncUseMock" checked />
+        <label for="syncUseMock">Fast Demo Mode (Use Verified ISMIS Snapshot)</label>
+      </div>
+
+      <button type="submit" class="btn-primary" id="syncSubmitBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Connect &amp; Sync</span>
+      </button>
+
+      <button type="button" class="btn-secondary" id="prefillDemoBtn">
+        Pre-fill Samuel Businge Demo
+      </button>
+
+      <button type="button" class="btn-secondary" id="toggleSyncBtn" style="border-style:dashed; color:var(--text-secondary);">
+        Switch Sync Mode (Public Cohort vs. Personal)
+      </button>
+    </form>
+  </aside>
+
+  <!-- GPA & Target Grade Simulator Sheet (Bottom Drawer) -->
+  <aside class="bottom-sheet-drawer gpa-modal-drawer" id="gpaModalSheet">
+    <div class="drawer-drag-handle"></div>
+    <div class="modal-header-flex">
+      <div>
+        <div class="sheet-title">🎯 GPA &amp; Target Grade Simulator</div>
+        <div class="sheet-subtitle">Model hypothetical grades &amp; target semester honours</div>
+      </div>
+      <button class="modal-close-btn" id="closeGpaModalBtn" aria-label="Close GPA Simulator">✕</button>
+    </div>
+
+    <!-- Projected GPA Banner -->
+    <div class="gpa-summary-hero">
+      <div class="gpa-score-display">
+        <div class="gpa-score-number" id="projectedGpaValue">4.42</div>
+        <div class="gpa-score-scale">/ 5.00</div>
+      </div>
+      <div class="gpa-badge-wrap">
+        <div class="badge-pill success" id="gpaHonoursBadge">🏆 First Class Honours</div>
+        <div class="gpa-credits-label" id="gpaTotalCreditsLabel">18.0 Total Credit Units</div>
+      </div>
+    </div>
+
+    <!-- Quick Target Presets -->
+    <div class="gpa-preset-row">
+      <span class="gpa-preset-label">Goals:</span>
+      <button type="button" class="preset-chip" onclick="window.applyGpaPreset('first')">First Class (A)</button>
+      <button type="button" class="preset-chip" onclick="window.applyGpaPreset('upper')">Upper 2nd (B+/A)</button>
+      <button type="button" class="preset-chip" onclick="window.applyGpaPreset('pass')">Pass (B/C)</button>
+    </div>
+
+    <!-- Course Grades Interactive List -->
+    <div class="gpa-courses-list" id="gpaCoursesList">
+      <!-- Injected dynamically by js/app.js -->
+    </div>
+
+    <button type="button" class="btn-primary" style="margin-top: 14px;" id="saveGpaTargetsBtn">
+      <span>Save Target Goals</span>
+    </button>
+  </aside>
+
+  <!-- New Assignment / Task Modal Sheet (Bottom Drawer) -->
+  <aside class="bottom-sheet-drawer" id="assignmentModal">
+    <div class="drawer-drag-handle"></div>
+    <div class="modal-header-flex">
+      <div>
+        <div class="sheet-title">📝 Add Academic Task</div>
+        <div class="sheet-subtitle">Track coursework, lab tests &amp; project deadlines</div>
+      </div>
+      <button class="modal-close-btn" id="closeAssignmentModalBtn" aria-label="Close Modal">✕</button>
+    </div>
+
+    <form id="assignmentForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="taskCourseUnit">Course Module</label>
+        <select class="form-input" id="taskCourseUnit" required>
+          <option value="HEC1207">HEC1207 • Fundamentals of Business &amp; Mgmt</option>
+          <option value="HEC1208">HEC1208 • Foundational Statistics</option>
+          <option value="HEC1209">HEC1209 • Life Skills Education</option>
+          <option value="HEC12101">HEC12101 • Logic Building &amp; Programming</option>
+          <option value="HEC1211">HEC1211 • Computer Application Lab</option>
+          <option value="HEC1212">HEC1212 • English Writing Skills</option>
+          <option value="GENERAL">General University / Bursar</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="taskTitleInput">Task / Assignment Title</label>
+        <input class="form-input" id="taskTitleInput" type="text" placeholder="e.g. Logic Building Lab Worksheet 3" required />
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="taskDueDateInput">Due Date</label>
+          <input class="form-input" id="taskDueDateInput" type="date" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="taskDueTimeInput">Due Time</label>
+          <input class="form-input" id="taskDueTimeInput" type="time" value="23:59" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="taskPrioritySelect">Priority Level</label>
+        <select class="form-input" id="taskPrioritySelect">
+          <option value="High">🔴 High Priority (Exam / CBT / Graded CW)</option>
+          <option value="Medium" selected>🟡 Medium Priority (Weekly Assignment)</option>
+          <option value="Low">🟢 Low Priority (Reading / Review)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-primary" id="saveAssignmentBtn" style="margin-top: 14px;">
+        <span>Create Assignment</span>
+      </button>
+    </form>
+  </aside>
+
+  <!-- Study Group Roster Modal -->
+  <aside class="bottom-sheet-drawer" id="studyGroupModal">
+    <div class="drawer-drag-handle"></div>
+    <div class="modal-header-flex">
+      <div>
+        <div class="sheet-title" id="studyGroupModalTitle">👥 Study Group: HEC1207</div>
+        <div class="sheet-subtitle" id="studyGroupModalSubtitle">28 Enrolled Classmates • Active Revision Group</div>
+      </div>
+      <button class="modal-close-btn" id="closeStudyGroupModalBtn" aria-label="Close Study Group">✕</button>
+    </div>
+
+    <div class="study-group-body" id="studyGroupModalBody">
+      <!-- Injected by js/app.js -->
+    </div>
+  </aside>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

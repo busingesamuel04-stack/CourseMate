@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>CourseMate - Personal Academic Command Center</title>
+  <meta name="description" content="Personal academic command center and study companion for university students." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Urbanist', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              primary: '#6366F1',
+              secondary: '#8B5CF6',
+              accent: '#38BDF8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090A0E;
+      color: #FFFFFF;
+      font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .liquid-card {
+      background: #13141D;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+    }
+    .liquid-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+    }
+    .gradient-mesh {
+      background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.18) 0%, transparent 60%),
+                  radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
+                  #0E101A;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 antialiased selection:bg-indigo-500/30 selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-30 w-full bg-[#090A0E]/90 backdrop-blur-2xl border-b border-white/[0.08]">
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 gap-4">
+      <!-- Brand -->
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white font-extrabold text-base shadow-md shadow-indigo-500/25">
+          C
+        </div>
+        <div class="leading-tight">
+          <span class="text-base sm:text-lg font-bold tracking-tight text-white">CourseMate</span>
+          <span class="block text-[10px] font-semibold text-indigo-400 tracking-wider uppercase">Standalone HTML Edition</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs (Desktop) -->
+      <nav class="hidden md:flex items-center gap-1 p-1 rounded-full bg-[#13141F] border border-white/[0.08]">
+        <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-1.5 text-xs font-extrabold rounded-full bg-white text-black transition-all">Home</button>
+        <button onclick="switchTab('planner')" id="nav-planner" class="nav-btn px-4 py-1.5 text-xs font-bold rounded-full text-zinc-400 hover:text-white transition-all">Planner</button>
+        <button onclick="switchTab('courses')" id="nav-courses" class="nav-btn px-4 py-1.5 text-xs font-bold rounded-full text-zinc-400 hover:text-white transition-all">Courses</button>
+        <button onclick="switchTab('study')" id="nav-study" class="nav-btn px-4 py-1.5 text-xs font-bold rounded-full text-zinc-400 hover:text-white transition-all">Study</button>
+        <button onclick="switchTab('campus')" id="nav-campus" class="nav-btn px-4 py-1.5 text-xs font-bold rounded-full text-zinc-400 hover:text-white transition-all">Campus</button>
+        <button onclick="switchTab('profile')" id="nav-profile" class="nav-btn px-4 py-1.5 text-xs font-bold rounded-full text-zinc-400 hover:text-white transition-all">Profile</button>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5 shrink-0">
+        <!-- Download HTML File Button -->
+        <button onclick="downloadSelf()" class="bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 flex h-9 items-center gap-1.5 rounded-full px-3.5 text-xs font-bold transition-all shadow-sm" title="Save this standalone HTML file offline">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <span class="hidden sm:inline">Save HTML</span>
+        </button>
+
+        <button onclick="alert('Student: Samuel Businge\nID: 23/U/18420/EVE\nProgramme: BSc Computer Science\nStatus: Synced with ISMIS & Moodle')" class="flex h-9 w-9 items-center justify-center rounded-full bg-[#13141F] border border-white/[0.08] text-white font-bold text-xs shadow-md">
+          SB
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="pt-20 px-4 sm:px-6 max-w-5xl mx-auto">
+
+    <!-- TAB 1: HOME -->
+    <div id="tab-home" class="space-y-6">
+      <!-- Hero Canopy -->
+      <section class="gradient-mesh p-6 sm:p-8 rounded-[36px] border border-white/[0.08] relative overflow-hidden">
+        <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase">Welcome Back</span>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mt-1 mb-4">Samuel Businge</h1>
+        <div onclick="switchTab('planner')" class="liquid-pill p-3.5 flex items-center justify-between cursor-pointer hover:bg-white/[0.07] transition-all">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-bold flex items-center justify-center text-xs">2</div>
+            <p class="text-xs sm:text-sm font-bold text-white">You have 2 assignments due this week</p>
+          </div>
+          <span class="text-xs text-indigo-300 font-bold">Review &rarr;</span>
+        </div>
+      </section>
+
+      <!-- Deadlines Card & Dial Focus Gauge -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Deadlines -->
+        <section class="liquid-card p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Urgent Actions</span>
+              <span class="text-xs text-zinc-400 font-medium">Due in 2 days</span>
+            </div>
+            <h2 class="text-lg font-bold text-white mt-2">2 Upcoming Deadlines</h2>
+
+            <div class="space-y-2 mt-4">
+              <div class="bg-[#181A27] p-3 rounded-2xl border border-white/[0.06] flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-bold text-white">Algorithm Analysis Lab 4</p>
+                  <span class="text-[10px] text-zinc-400">CS301 · Due Oct 01, 23:59</span>
+                </div>
+                <span class="bg-indigo-500/20 text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full">High Yield</span>
+              </div>
+              <div class="bg-[#181A27] p-3 rounded-2xl border border-white/[0.06] flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-bold text-white">Distributed Database Assignment</p>
+                  <span class="text-[10px] text-zinc-400">CS304 · Due Oct 02, 17:00</span>
+                </div>
+                <span class="bg-indigo-500/20 text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full">Core</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-4 border-t border-white/[0.08] flex items-center justify-between flex-wrap gap-2">
+            <span class="text-xs text-zinc-400">Auto-monitored from LMS</span>
+            <button onclick="switchTab('planner')" class="bg-white hover:bg-zinc-100 text-black px-4 py-2 rounded-full text-xs font-bold transition-all">View Planner</button>
+          </div>
+        </section>
+
+        <!-- Interactive Rotary Focus Dial Gauge -->
+        <section class="liquid-card p-6 flex flex-col justify-between text-center">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Focus Target</span>
+            <span id="streak-badge" class="text-xs text-indigo-300 font-bold">14 Day Streak</span>
+          </div>
+
+          <!-- Circular SVG Gauge with Interactive Counter -->
+          <div class="my-4 relative flex flex-col items-center justify-center">
+            <div class="w-36 h-36 rounded-full bg-[#161825] border-2 border-indigo-500/30 flex flex-col items-center justify-center shadow-lg relative">
+              <span id="dial-hours" class="text-4xl font-extrabold text-white tracking-tight">18</span>
+              <span class="text-[10px] uppercase font-bold text-zinc-400 tracking-wider">of 25 hrs Goal</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-3">
+            <button onclick="adjustHours(-1)" class="w-9 h-9 rounded-full bg-[#181A27] border border-white/[0.08] text-white font-bold hover:bg-white/[0.1] transition-all">-1h</button>
+            <span class="text-xs font-bold text-zinc-300">Log Study Hours</span>
+            <button onclick="adjustHours(1)" class="w-9 h-9 rounded-full bg-white text-black font-bold hover:bg-zinc-200 transition-all">+1h</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Quick Action Pills -->
+      <section class="liquid-card p-5">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">Academic Quick Actions</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <button onclick="switchTab('planner')" class="p-3 rounded-2xl bg-[#181A27] hover:bg-[#202334] border border-white/[0.06] text-xs font-bold text-zinc-200 text-left transition-all">📅 Timetable</button>
+          <button onclick="switchTab('courses')" class="p-3 rounded-2xl bg-[#181A27] hover:bg-[#202334] border border-white/[0.06] text-xs font-bold text-zinc-200 text-left transition-all">📚 Course Syllabi</button>
+          <button onclick="switchTab('study')" class="p-3 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-600 text-white border border-white/20 text-xs font-bold text-left shadow-md transition-all">⚡ Active Recall</button>
+          <button onclick="switchTab('campus')" class="p-3 rounded-2xl bg-[#181A27] hover:bg-[#202334] border border-white/[0.06] text-xs font-bold text-zinc-200 text-left transition-all">🏛️ Campus Hub</button>
+        </div>
+      </section>
+
+      <!-- Today's Class & Digital ID Card -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Today's Next Class -->
+        <div class="liquid-card p-6 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-indigo-500/20 text-indigo-300">Next Lecture</span>
+            <span class="text-xs text-zinc-400">10:00 AM - 12:00 PM</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">CS301: Advanced Data Structures</h3>
+          <p class="text-xs text-zinc-400">Block B, Lecture Hall 2 · Dr. Sarah Nabirye</p>
+          <div class="pt-2 flex items-center gap-2">
+            <button onclick="alert('Routing: Block B is located 120m from Central Library. Take stairs to 2nd Floor, Hall 2.')" class="bg-white hover:bg-zinc-100 text-black px-4 py-2 rounded-full text-xs font-bold transition-all">Room Route</button>
+            <button onclick="alert('Lecturer: Dr. Sarah Nabirye\nOffice: Science Faculty Room 304\nOffice Hours: Fri 10:00 AM')" class="bg-[#181A27] border border-white/[0.08] text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-white/[0.08] transition-all">Lecturer Info</button>
+          </div>
+        </div>
+
+        <!-- Digital Student ID -->
+        <div class="h-full rounded-[28px] bg-gradient-to-br from-[#1E2034] via-[#161726] to-[#12131F] p-6 text-white flex flex-col justify-between border border-white/[0.1] shadow-xl">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider">Makerere Student Identity</span>
+            <span class="font-mono text-xs text-zinc-400">23/U/18420/EVE</span>
+          </div>
+          <div class="my-4">
+            <h4 class="text-lg font-extrabold text-white">Samuel Businge</h4>
+            <p class="text-xs text-zinc-300">BSc Computer Science · Year 3, Sem 1</p>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-zinc-400 pt-2 border-t border-white/[0.08]">
+            <span>Valid 2026/2027</span>
+            <span class="text-emerald-400 font-bold">● Active Status</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PLANNER -->
+    <div id="tab-planner" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Academic Planner</h1>
+          <p class="text-xs text-zinc-400">Timetable, deadlines, exams, and verified commitments</p>
+        </div>
+        <button onclick="alert('To add an event, use CourseMate desktop or connect your university calendar.')" class="bg-white hover:bg-zinc-100 text-black px-4 py-2 rounded-full text-xs font-bold">+ Add Event</button>
+      </div>
+
+      <!-- Week Days Picker -->
+      <div class="liquid-card p-4">
+        <div class="grid grid-cols-7 gap-1.5 text-center">
+          <div class="p-2.5 rounded-2xl bg-[#181A27] border border-white/[0.06]"><span class="text-[10px] text-zinc-400 uppercase">Mon</span><p class="font-bold text-white text-sm">28</p></div>
+          <div class="p-2.5 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white border border-white/20 shadow-md"><span class="text-[10px] uppercase font-bold text-indigo-200">Tue</span><p class="font-bold text-white text-sm">29</p></div>
+          <div class="p-2.5 rounded-2xl bg-[#181A27] border border-white/[0.06]"><span class="text-[10px] text-zinc-400 uppercase">Wed</span><p class="font-bold text-white text-sm">30</p></div>
+          <div class="p-2.5 rounded-2xl bg-[#181A27] border border-white/[0.06]"><span class="text-[10px] text-zinc-400 uppercase">Thu</span><p class="font-bold text-white text-sm">01</p></div>
+          <div class="p-2.5 rounded-2xl bg-[#181A27] border border-white/[0.06]"><span class="text-[10px] text-zinc-400 uppercase">Fri</span><p class="font-bold text-white text-sm">02</p></div>
+          <div class="p-2.5 rounded-2xl bg-[#181A27] border border-white/[0.06]"><span class="text-[10px] text-zinc-400 uppercase">Sat</span><p class="font-bold text-white text-sm">03</p></div>
+          <div class="p-2.5 rounded-2xl bg-[#181A27] border border-white/[0.06]"><span class="text-[10px] text-zinc-400 uppercase">Sun</span><p class="font-bold text-white text-sm">04</p></div>
+        </div>
+      </div>
+
+      <!-- Events List -->
+      <div class="space-y-3">
+        <div class="liquid-card p-4 sm:p-5 flex items-center justify-between gap-4">
+          <div class="w-16 border-r border-white/[0.08] pr-2 text-center">
+            <span class="text-xs font-bold text-white block">09:00</span>
+            <span class="text-[10px] text-zinc-400">Today</span>
+          </div>
+          <div class="flex-1">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300">CS301</span>
+            <h4 class="text-sm sm:text-base font-bold text-white mt-1">Lecture: Balanced Search Trees & Red-Black Trees</h4>
+            <p class="text-xs text-zinc-400">Block B, Hall 2 · Source: ISMIS Verified</p>
+          </div>
+          <input type="checkbox" class="w-5 h-5 accent-indigo-600 rounded cursor-pointer" />
+        </div>
+
+        <div class="liquid-card p-4 sm:p-5 flex items-center justify-between gap-4">
+          <div class="w-16 border-r border-white/[0.08] pr-2 text-center">
+            <span class="text-xs font-bold text-white block">14:00</span>
+            <span class="text-[10px] text-zinc-400">Today</span>
+          </div>
+          <div class="flex-1">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300">CS304</span>
+            <h4 class="text-sm sm:text-base font-bold text-white mt-1">Practical Lab: Query Execution Engine</h4>
+            <p class="text-xs text-zinc-400">Computer Lab 3 · Source: Moodle LMS</p>
+          </div>
+          <input type="checkbox" class="w-5 h-5 accent-indigo-600 rounded cursor-pointer" />
+        </div>
+
+        <div class="liquid-card p-4 sm:p-5 flex items-center justify-between gap-4">
+          <div class="w-16 border-r border-white/[0.08] pr-2 text-center">
+            <span class="text-xs font-bold text-white block">23:59</span>
+            <span class="text-[10px] text-rose-400 font-bold">Oct 01</span>
+          </div>
+          <div class="flex-1">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300">DEADLINE</span>
+            <h4 class="text-sm sm:text-base font-bold text-white mt-1">Assignment 4 Submission: Red-Black Deletion</h4>
+            <p class="text-xs text-zinc-400">Online Submission via Moodle</p>
+          </div>
+          <input type="checkbox" class="w-5 h-5 accent-indigo-600 rounded cursor-pointer" />
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: COURSES -->
+    <div id="tab-courses" class="space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Enrolled Courses</h1>
+          <p class="text-xs text-zinc-400">5 accredited courses · 17 Credit Units · Semester 1</p>
+        </div>
+        <input type="text" id="courseSearch" oninput="filterCourses()" placeholder="Search course or code..." class="px-4 py-2 rounded-full text-xs bg-[#13141F] border border-white/[0.08] text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/30" />
+      </div>
+
+      <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Course 1 -->
+        <div class="course-card liquid-card p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300">CS301 · 4 CU</span>
+            <span class="bg-[#1C1E2D] border border-white/[0.08] text-xs font-bold text-zinc-200 px-3 py-1 rounded-full">Grade: A</span>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-white">Advanced Data Structures</h3>
+            <p class="text-xs text-zinc-400 mt-0.5">Lecturer: Dr. Sarah Nabirye · Block B, Hall 2</p>
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] text-zinc-400 mb-1 font-semibold">
+              <span>Syllabus Coverage</span>
+              <span>72%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-[#181926] overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style="width: 72%;"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xs text-zinc-400 pt-2 border-t border-white/[0.08]">
+            <span>2 Assignments · 1 Test</span>
+            <span class="text-indigo-400 font-bold">Verified ✓</span>
+          </div>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="course-card liquid-card p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300">CS304 · 4 CU</span>
+            <span class="bg-[#1C1E2D] border border-white/[0.08] text-xs font-bold text-zinc-200 px-3 py-1 rounded-full">Grade: B+</span>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-white">Database Systems Engineering</h3>
+            <p class="text-xs text-zinc-400 mt-0.5">Lecturer: Prof. Emmanuel Okello · Lab 3</p>
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] text-zinc-400 mb-1 font-semibold">
+              <span>Syllabus Coverage</span>
+              <span>64%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-[#181926] overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style="width: 64%;"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xs text-zinc-400 pt-2 border-t border-white/[0.08]">
+            <span>1 Assignment · 2 Tests</span>
+            <span class="text-indigo-400 font-bold">Verified ✓</span>
+          </div>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="course-card liquid-card p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300">CS310 · 3 CU</span>
+            <span class="bg-[#1C1E2D] border border-white/[0.08] text-xs font-bold text-zinc-200 px-3 py-1 rounded-full">Grade: A</span>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-white">Operating Systems & Kernels</h3>
+            <p class="text-xs text-zinc-400 mt-0.5">Lecturer: Dr. Moses Kigozi · Hall 4</p>
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] text-zinc-400 mb-1 font-semibold">
+              <span>Syllabus Coverage</span>
+              <span>80%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-[#181926] overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style="width: 80%;"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xs text-zinc-400 pt-2 border-t border-white/[0.08]">
+            <span>3 Assignments · 1 Exam</span>
+            <span class="text-indigo-400 font-bold">Verified ✓</span>
+          </div>
+        </div>
+
+        <!-- Course 4 -->
+        <div class="course-card liquid-card p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300">MTH301 · 3 CU</span>
+            <span class="bg-[#1C1E2D] border border-white/[0.08] text-xs font-bold text-zinc-200 px-3 py-1 rounded-full">Grade: B</span>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-white">Discrete Computational Mathematics</h3>
+            <p class="text-xs text-zinc-400 mt-0.5">Lecturer: Dr. Patricia Namubiru · Math Room 12</p>
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] text-zinc-400 mb-1 font-semibold">
+              <span>Syllabus Coverage</span>
+              <span>58%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-[#181926] overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" style="width: 58%;"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xs text-zinc-400 pt-2 border-t border-white/[0.08]">
+            <span>1 Assignment · 2 Quizzes</span>
+            <span class="text-indigo-400 font-bold">Verified ✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: STUDY ENGINE -->
+    <div id="tab-study" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Study & Retention Engine</h1>
+          <p class="text-xs text-zinc-400">Active recall, flashcards, focus sessions, and concept drills</p>
+        </div>
+        <span class="bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-xs font-bold py-2 px-4 rounded-full">14 Day Streak 🔥</span>
+      </div>
+
+      <!-- Smart Recommendation Card -->
+      <section class="liquid-card p-6 space-y-3">
+        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300">Recommended 25m Focus Slot</span>
+        <h3 class="text-lg font-bold text-white">CS301: Red-Black Tree Balancing Invariants</h3>
+        <p class="text-xs text-zinc-300 leading-relaxed">You have an upcoming quiz in 3 days and haven't reviewed rotation cases since last Thursday. A 25m active recall drill will maximize your retention.</p>
+        <button onclick="startFocusTimer()" class="bg-gradient-to-r from-indigo-500 to-violet-600 text-white px-6 py-2.5 rounded-full text-xs font-bold shadow-md">Start 25m Focus Drill</button>
+      </section>
+
+      <!-- Interactive Flashcard -->
+      <section class="liquid-card p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-bold text-white">Active Recall Flashcards (CS301)</h3>
+          <span id="card-counter" class="text-xs text-zinc-400 font-bold">Card 1 of 3</span>
+        </div>
+
+        <div onclick="flipFlashcard()" id="flashcard-body" class="min-h-[180px] p-6 rounded-2xl bg-[#181A27] border border-white/[0.08] flex flex-col justify-between cursor-pointer hover:border-indigo-500/40 transition-all select-none">
+          <span id="card-side" class="text-[10px] font-bold uppercase tracking-wider text-indigo-400">Question (Tap to flip)</span>
+          <p id="card-text" class="text-lg sm:text-xl font-bold text-white py-3">What are the 4 fundamental properties of a Red-Black Tree?</p>
+          <span class="text-[11px] text-zinc-400 italic">Tap anywhere to flip card</span>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button onclick="prevFlashcard()" class="px-4 py-2 rounded-full text-xs font-bold bg-[#181A27] border border-white/[0.08] text-zinc-300 hover:text-white">&larr; Previous</button>
+          <button onclick="markMastered()" id="mastered-btn" class="px-4 py-2 rounded-full text-xs font-bold text-zinc-400 hover:text-emerald-400">Mark Mastered</button>
+          <button onclick="nextFlashcard()" class="px-5 py-2 rounded-full text-xs font-bold bg-white text-black hover:bg-zinc-100">Next &rarr;</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- TAB 5: CAMPUS HUB -->
+    <div id="tab-campus" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Campus Hub</h1>
+          <p class="text-xs text-zinc-400">Discover events, student study groups, opportunities, and services</p>
+        </div>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">⚡ 1,240 XP Active</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Hub Tile 1 -->
+        <div onclick="alert('Communities: Over 12 active student developer and computing circles meeting weekly.')" class="liquid-card p-5 cursor-pointer hover:border-indigo-500/40 transition-all space-y-2">
+          <span class="text-2xl">👥</span>
+          <h3 class="text-base font-bold text-white">Student Communities</h3>
+          <p class="text-xs text-zinc-400">Join Google Developer Student Club, Makerere AI Society, and Coding Labs.</p>
+        </div>
+
+        <!-- Hub Tile 2 -->
+        <div onclick="alert('Study Groups: 4 active study rooms formed for CS301 Algorithms.')" class="liquid-card p-5 cursor-pointer hover:border-indigo-500/40 transition-all space-y-2">
+          <span class="text-2xl">📖</span>
+          <h3 class="text-base font-bold text-white">Peer Study Groups</h3>
+          <p class="text-xs text-zinc-400">Collaborate with classmates on problem sets and exam prep.</p>
+        </div>
+
+        <!-- Hub Tile 3 -->
+        <div onclick="alert('Events: University Tech Expo scheduled for Oct 14 in Main Hall.')" class="liquid-card p-5 cursor-pointer hover:border-indigo-500/40 transition-all space-y-2">
+          <span class="text-2xl">🎉</span>
+          <h3 class="text-base font-bold text-white">Campus Events & RSVPs</h3>
+          <p class="text-xs text-zinc-400">Hackathons, guest lectures, department symposiums, and sports.</p>
+        </div>
+
+        <!-- Hub Tile 4 -->
+        <div onclick="alert('Opportunities: 3 research assistantships open in Data Science department.')" class="liquid-card p-5 cursor-pointer hover:border-indigo-500/40 transition-all space-y-2">
+          <span class="text-2xl">💼</span>
+          <h3 class="text-base font-bold text-white">Grants & Internships</h3>
+          <p class="text-xs text-zinc-400">Academic stipends, undergraduate internships, and fellowships.</p>
+        </div>
+
+        <!-- Hub Tile 5 -->
+        <div onclick="alert('Questions & Answers: 24 active student discussions on pointer arithmetic.')" class="liquid-card p-5 cursor-pointer hover:border-indigo-500/40 transition-all space-y-2">
+          <span class="text-2xl">💬</span>
+          <h3 class="text-base font-bold text-white">Academic Q&A</h3>
+          <p class="text-xs text-zinc-400">Verified student and TA answers to difficult homework problems.</p>
+        </div>
+
+        <!-- Hub Tile 6 -->
+        <div onclick="alert('Services: University ICT Helpdesk, Health Center, and Library Book Loan.')" class="liquid-card p-5 cursor-pointer hover:border-indigo-500/40 transition-all space-y-2">
+          <span class="text-2xl">🏛️</span>
+          <h3 class="text-base font-bold text-white">Campus Services</h3>
+          <p class="text-xs text-zinc-400">Library reservations, ICT portal support, and university bursar info.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: PROFILE -->
+    <div id="tab-profile" class="space-y-6 hidden">
+      <div class="liquid-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white font-extrabold text-2xl flex items-center justify-center shadow-lg shadow-indigo-500/25">
+            SB
+          </div>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">Samuel Businge</h2>
+            <p class="text-xs text-zinc-400 mt-0.5">ID: 23/U/18420/EVE · BSc Computer Science</p>
+            <p class="text-xs text-zinc-500 mt-0.5">Makerere University · Year 3, Semester 1</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 sm:border-l sm:border-white/[0.08] sm:pl-6">
+          <div>
+            <span class="text-[10px] text-zinc-400 uppercase font-bold">Cumulative GPA</span>
+            <p class="text-2xl font-extrabold text-white">4.38</p>
+          </div>
+          <div>
+            <span class="text-[10px] text-zinc-400 uppercase font-bold">Credits Current Sem</span>
+            <p class="text-2xl font-extrabold text-indigo-400">17 CU</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sync Status -->
+      <section class="liquid-card p-6 space-y-3">
+        <h3 class="text-base font-bold text-white">Verified Academic Data Sources</h3>
+        <div class="space-y-2">
+          <div class="p-3 rounded-2xl bg-[#181A27] border border-white/[0.06] flex items-center justify-between text-xs">
+            <span class="font-bold text-white">University ISMIS Student Portal</span>
+            <span class="text-emerald-400 font-bold">● Connected & Synced</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-[#181A27] border border-white/[0.06] flex items-center justify-between text-xs">
+            <span class="font-bold text-white">Moodle LMS Course Outline Engine</span>
+            <span class="text-emerald-400 font-bold">● Connected & Synced</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-[#181A27] border border-white/[0.06] flex items-center justify-between text-xs">
+            <span class="font-bold text-white">Class Rep Announcements Bridge</span>
+            <span class="text-emerald-400 font-bold">● Connected & Synced</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Export to HTML Card -->
+      <section class="liquid-card p-6 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h3 class="text-base font-bold text-white">Export Standalone HTML</h3>
+          <p class="text-xs text-zinc-400 mt-0.5">Download this entire CourseMate dashboard as a single self-contained HTML file.</p>
+        </div>
+        <button onclick="downloadSelf()" class="bg-white hover:bg-zinc-100 text-black px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-md">
+          Download .html
+        </button>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Bottom Floating Dock (Mobile) -->
+  <div class="fixed bottom-3 left-0 right-0 z-40 block md:hidden px-4 pointer-events-none">
+    <nav class="bg-[#141522]/95 backdrop-blur-2xl border border-white/[0.1] shadow-2xl max-w-xs mx-auto h-14 rounded-full px-4 flex items-center justify-around pointer-events-auto">
+      <button onclick="switchTab('home')" class="text-xs font-bold text-white">Home</button>
+      <button onclick="switchTab('planner')" class="text-xs font-bold text-zinc-400">Plan</button>
+      <button onclick="switchTab('courses')" class="text-xs font-bold text-zinc-400">Courses</button>
+      <button onclick="switchTab('study')" class="text-xs font-bold text-zinc-400">Study</button>
+      <button onclick="switchTab('campus')" class="text-xs font-bold text-zinc-400">Campus</button>
+      <button onclick="switchTab('profile')" class="text-xs font-bold text-zinc-400">Profile</button>
+    </nav>
+  </div>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      const tabs = ['home', 'planner', 'courses', 'study', 'campus', 'profile'];
+      tabs.forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        const navBtn = document.getElementById('nav-' + t);
+        if (el) {
+          if (t === tabId) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+        if (navBtn) {
+          if (t === tabId) {
+            navBtn.className = 'nav-btn px-4 py-1.5 text-xs font-extrabold rounded-full bg-white text-black transition-all';
+          } else {
+            navBtn.className = 'nav-btn px-4 py-1.5 text-xs font-bold rounded-full text-zinc-400 hover:text-white transition-all';
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Dial Focus Hours adjustment
+    let studyHours = 18;
+    function adjustHours(delta) {
+      studyHours = Math.max(0, studyHours + delta);
+      document.getElementById('dial-hours').innerText = studyHours;
+    }
+
+    // Interactive Flashcards
+    const cards = [
+      {
+        q: "What are the 4 fundamental properties of a Red-Black Tree?",
+        a: "1. Every node is red or black.\n2. Root is black.\n3. Red nodes cannot have red children (no 2 consecutive reds).\n4. Every path from root to null leaves contains the same number of black nodes."
+      },
+      {
+        q: "What is the worst-case search and insert complexity of an AVL or Red-Black Tree?",
+        a: "O(log n) time complexity, because height is guaranteed to be bounded logarithmically relative to the number of nodes."
+      },
+      {
+        q: "When would you prefer a B-Tree over a Red-Black Tree?",
+        a: "When data is stored on disk or in database storage systems (like PostgreSQL/MySQL), because large block size minimizes expensive disk I/O operations."
+      }
+    ];
+
+    let currentCardIdx = 0;
+    let isFlipped = false;
+
+    function flipFlashcard() {
+      isFlipped = !isFlipped;
+      const sideEl = document.getElementById('card-side');
+      const textEl = document.getElementById('card-text');
+      const cur = cards[currentCardIdx];
+      if (isFlipped) {
+        sideEl.innerText = "Answer & Verification";
+        sideEl.className = "text-[10px] font-bold uppercase tracking-wider text-emerald-400";
+        textEl.innerText = cur.a;
+      } else {
+        sideEl.innerText = "Question (Tap to flip)";
+        sideEl.className = "text-[10px] font-bold uppercase tracking-wider text-indigo-400";
+        textEl.innerText = cur.q;
+      }
+    }
+
+    function nextFlashcard() {
+      isFlipped = false;
+      currentCardIdx = (currentCardIdx + 1) % cards.length;
+      updateCardUI();
+    }
+
+    function prevFlashcard() {
+      isFlipped = false;
+      currentCardIdx = currentCardIdx === 0 ? cards.length - 1 : currentCardIdx - 1;
+      updateCardUI();
+    }
+
+    function updateCardUI() {
+      document.getElementById('card-counter').innerText = `Card ${currentCardIdx + 1} of ${cards.length}`;
+      document.getElementById('card-side').innerText = "Question (Tap to flip)";
+      document.getElementById('card-side').className = "text-[10px] font-bold uppercase tracking-wider text-indigo-400";
+      document.getElementById('card-text').innerText = cards[currentCardIdx].q;
+    }
+
+    function markMastered() {
+      const btn = document.getElementById('mastered-btn');
+      btn.innerText = "Mastered ✓";
+      btn.className = "px-4 py-2 rounded-full text-xs font-bold text-emerald-400";
+    }
+
+    function startFocusTimer() {
+      alert("Starting 25-minute Pomodoro focus block on Red-Black Tree Balancing. Turn off notifications and begin reviewing!");
+    }
+
+    // Filter courses
+    function filterCourses() {
+      const query = document.getElementById('courseSearch').value.toLowerCase();
+      const cards = document.querySelectorAll('.course-card');
+      cards.forEach(c => {
+        const text = c.innerText.toLowerCase();
+        c.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    }
+
+    // Download standalone HTML
+    function downloadSelf() {
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "coursemate-standalone.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

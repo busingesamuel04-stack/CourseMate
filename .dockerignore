@@ -1,0 +1,33 @@
+# -- Node ------------------------------------------------------
+node_modules
+npm-debug.log*
+
+# -- Build artefacts -------------------------------------------
+dist/
+
+# -- Dev / test files ------------------------------------------
+test/
+stitch_design/
+*.test.*
+*.spec.*
+
+# -- Secrets (should never be in the image) --------------------
+.env
+.env.*
+!.env.example
+
+# -- Local OS / Editor -----------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# -- Git -------------------------------------------------------
+.git/
+.gitignore
+
+# -- Large static files not needed by backend -----------------
+portal.html
+index.prototype.html
+test_dark_schedule.png
+output.json
