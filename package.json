@@ -14,6 +14,7 @@
     "lint": "tsc --noEmit",
     "test": "node test/parser.test.js",
     "test:bridge": "node test/sync_bridge.test.js",
+    "scrape": "node src/scraper.js",
     "mock": "node src/scraper.js --mock"
   },
   "dependencies": {
@@ -46,6 +47,7 @@
     "esbuild": "^0.28.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite-plugin-pwa": "^1.3.0"
   }
 }

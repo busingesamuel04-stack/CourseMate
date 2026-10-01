@@ -775,6 +775,185 @@ async function startServer() {
     }
   });
 
+  // ==========================================
+  // Cache-and-Sync Bridge: POST /api/trigger-scrape
+  //
+  // Called by the client when the Supabase grades/courses cache is empty for a
+  // given student_id. This endpoint:
+  //   1. Looks up the student's portal credentials from student_academic_records.
+  //   2. Dispatches a background Playwright scrape (non-blocking — responds 202).
+  //   3. Upserts freshly scraped rows into enrolled_courses + student_academic_records
+  //      so that the Supabase Realtime subscription in the client fires automatically.
+  //
+  // Auth: requires a valid Bearer token (same as the rest of the sync routes).
+  // ==========================================
+  app.post('/api/trigger-scrape', async (req, res) => {
+    try {
+      const user = await getAuthenticatedUser(req);
+      if (!user) {
+        return res.status(401).json({ status: 'error', message: 'Authentication required.' });
+      }
+
+      const {
+        student_id,
+        university = 'ISBAT University',
+        institutionId,
+        // Optional: caller may pass credentials directly (e.g. from onboarding flow).
+        // If omitted, the server attempts to retrieve them from the DB record.
+        username: callerUsername,
+        password: callerPassword,
+        useMock = false,
+      } = req.body || {};
+
+      const instConfig = resolveInstitutionConfig(institutionId, university);
+
+      console.log(
+        `[TriggerScrape] Received scrape request — student_id: "${student_id}", university: "${instConfig.name}", user: ${user.id}, mock: ${useMock}`
+      );
+
+      // Resolve credentials: prefer caller-supplied, fall back to DB record.
+      let portalUsername = callerUsername || '';
+      let portalPassword = callerPassword || '';
+
+      if (supabaseAdmin && (!portalUsername || !portalPassword)) {
+        const { data: record } = await supabaseAdmin
+          .from('student_academic_records')
+          .select('student_id, reg_number')
+          .eq('profile_id', user.id)
+          .maybeSingle();
+
+        if (record) {
+          // Use reg_number / student_id as the portal username when no explicit
+          // credentials are provided (mock-safe: portal will use student_id as login).
+          portalUsername = portalUsername || record.reg_number || record.student_id || student_id || '';
+        }
+      }
+
+      // Respond immediately — scraping is asynchronous. The Realtime subscription
+      // on the client side will pick up DB changes as they land.
+      res.status(202).json({
+        status: 'accepted',
+        message: 'Scrape job dispatched. Results will be streamed via Supabase Realtime.',
+        student_id: student_id || portalUsername,
+        university: instConfig.name,
+      });
+
+      // ── Background Scrape ──────────────────────────────────────────────────
+      (async () => {
+        try {
+          console.log(`[TriggerScrape] Starting background scrape (engine: ${instConfig.engine}, user: ${user.id})`);
+
+          let scrapeResult: any;
+
+          if (instConfig.engine === 'ACMIS') {
+            scrapeResult = await authenticateAndFetchAcmis(portalUsername, portalPassword, {
+              university: instConfig.name,
+              baseUrl: instConfig.portalUrl,
+              mock: useMock,
+              headless: true,
+              timeout: 30000,
+            });
+          } else {
+            // ISMIS (ISBAT)
+            scrapeResult = await authenticateAndFetchHtml(portalUsername, portalPassword, {
+              mock: useMock,
+              headless: true,
+              timeout: 30000,
+            });
+          }
+
+          if (!scrapeResult || scrapeResult.status !== 'success') {
+            console.warn(`[TriggerScrape] Scrape failed for user ${user.id}:`, scrapeResult?.message);
+            return;
+          }
+
+          console.log(`[TriggerScrape] Scrape succeeded for user ${user.id}. Upserting to Supabase...`);
+
+          if (!supabaseAdmin) {
+            console.warn('[TriggerScrape] supabaseAdmin not available – skipping DB upsert.');
+            return;
+          }
+
+          const { student: rawStudent = {}, courses: coursesList = [], feeSummary } = scrapeResult;
+
+          // 1. Upsert profile
+          await supabaseAdmin.from('profiles').upsert(
+            {
+              id: user.id,
+              email: user.email || 'student@coursemate.ug',
+              full_name: rawStudent.name || 'CourseMate Student',
+              selected_university: instConfig.name,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: 'id' }
+          );
+
+          // 2. Upsert student_academic_records — Realtime fires here for the student row.
+          await supabaseAdmin.from('student_academic_records').upsert(
+            {
+              profile_id: user.id,
+              university: instConfig.name,
+              student_name: rawStudent.name || 'Student',
+              preferred_name: (rawStudent.name || 'Student').split(' ')[0],
+              student_id: rawStudent.studentId || rawStudent.regNumber || student_id || portalUsername,
+              reg_number: rawStudent.regNumber || rawStudent.studentId || student_id || portalUsername,
+              faculty: rawStudent.faculty || `${instConfig.name} Faculty`,
+              programme: rawStudent.programme || rawStudent.program || 'Certificate Programme',
+              semester_name: rawStudent.semester || rawStudent.semesterName || 'Year One - Semester Two',
+              academic_status: rawStudent.academicStatus || 'Active',
+              year: rawStudent.year || 1,
+              semester: 2,
+              current_gpa: rawStudent.currentGpa || 0,
+              fee_summary: feeSummary || {},
+              is_synced: true,
+              last_synced_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: 'profile_id,university' }
+          );
+
+          // 3. Upsert enrolled_courses — Realtime fires here for each course row.
+          if (coursesList.length > 0) {
+            const colors = ['#8B5CF6', '#3B82F6', '#06B6D4', '#10B981', '#F59E0B', '#EC4899'];
+            const courseRows = coursesList.map((c: any, idx: number) => ({
+              profile_id: user.id,
+              university: instConfig.name,
+              course_code: c.code,
+              course_title: c.title || c.name || c.code,
+              credit_units: c.creditUnits || c.credits || 3,
+              lecturer: c.lecturer || `${instConfig.name} Faculty`,
+              room: c.room || `Lab ${idx + 1} / Main Campus`,
+              color: c.color || colors[idx % colors.length],
+              next_class: c.nextClass || (idx === 0 ? 'Today · 09:00' : 'Tomorrow · 11:00'),
+              progress_pct: c.progressPct ?? 50,
+              grade_estimate: c.grade || c.gradeEstimate || 'In Progress',
+              upcoming_assignments: c.upcomingAssignments ?? 1,
+              upcoming_tests: c.upcomingTests ?? (c.timetable?.examDate && c.timetable.examDate !== 'Not Yet Scheduled' ? 1 : 0),
+              materials_count: c.materialsCount ?? 12,
+              syllabus_topics: c.syllabusTopics || [],
+              timetable: c.timetable || {},
+              assessments: c.assessments || {},
+              updated_at: new Date().toISOString(),
+            }));
+
+            await supabaseAdmin
+              .from('enrolled_courses')
+              .upsert(courseRows, { onConflict: 'profile_id,university,course_code' });
+          }
+
+          console.log(
+            `[TriggerScrape] ✓ DB upsert complete for user ${user.id} — ${coursesList.length} courses, student row updated.`
+          );
+        } catch (bgErr: any) {
+          console.error('[TriggerScrape] Background scrape error:', bgErr.message);
+        }
+      })();
+    } catch (err: any) {
+      console.error('[TriggerScrape] Handler error:', err.message);
+      return res.status(500).json({ status: 'error', message: err.message });
+    }
+  });
+
 
   const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,

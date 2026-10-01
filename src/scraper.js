@@ -178,7 +178,7 @@ if (require.main === module) {
     const filteredArgs = rawArgs.filter(a => !a.startsWith('--'));
 
     // Read credentials from CLI arguments, environment variables, or .env
-    const username = filteredArgs[0] || process.env.STUDENT_USER;
+    const username = filteredArgs[0] || process.env.TARGET_STUDENT_ID || process.env.STUDENT_USER;
     const password = filteredArgs[1] || process.env.STUDENT_PASS;
 
     console.log('====================================================');

@@ -1,0 +1,41 @@
+name: Scrape Portal
+
+on:
+  workflow_dispatch:
+    inputs:
+      student_id:
+        description: 'Target Student ID to scrape'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # Run every 4 hours (at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC)
+    - cron: '0 */4 * * *'
+
+jobs:
+  scrape:
+    name: Scrape Portal
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium with dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Run scraper
+        run: npm run scrape
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TARGET_STUDENT_ID: ${{ inputs.student_id || github.event.inputs.student_id }}
