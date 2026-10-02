@@ -3065,8 +3065,8 @@ export const UNIVERSITY_CAMPUS_VENUES: Record<SupportedUniversity, string[]> = {
   ],
 };
 
-export function getUniversityCampusVenues(uni: SupportedUniversity = 'ISBAT University'): string[] {
-  return UNIVERSITY_CAMPUS_VENUES[uni] || UNIVERSITY_CAMPUS_VENUES['ISBAT University'];
+export function getUniversityCampusVenues(uni: SupportedUniversity | string = 'ISBAT University'): string[] {
+  return (UNIVERSITY_CAMPUS_VENUES as Record<string, string[]>)[uni] || UNIVERSITY_CAMPUS_VENUES['ISBAT University'];
 }
 
 

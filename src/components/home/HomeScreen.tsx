@@ -125,7 +125,7 @@ export const HomeScreen: React.FC = () => {
       : 'No upcoming deadlines';
 
   return (
-    <div className="space-y-6 pb-16">
+    <div className="min-h-[100dvh] w-full px-4 pt-4 pb-32 overflow-y-auto space-y-6">
       {/* 1. HERO CANOPY (Dark Canvas with Soft Lavender/Blue Mesh Gradient and iOS Liquid Pill) */}
       <section className="relative w-full gradient-coral-mesh pt-20 sm:pt-24 pb-8 sm:pb-10 px-5 sm:px-8 text-white overflow-hidden rounded-b-[40px] sm:rounded-b-[48px] border-b border-white/[0.08]">
         {/* Subtle decorative ambient curves */}

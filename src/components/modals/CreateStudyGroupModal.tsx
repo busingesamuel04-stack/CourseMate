@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { X, Users, MapPin, Clock, Sparkles } from 'lucide-react';
-
+import { SupportedUniversity } from '../../types';
 import { getUniversityCampusVenues } from '../../data/mockData';
 
 export const CreateStudyGroupModal: React.FC = () => {
   const { closeModal, courses, addStudyGroup, student, selectedUniversity } = useApp();
-  const activeUni = selectedUniversity || student.university || 'ISBAT University';
+  const activeUni: SupportedUniversity =
+    selectedUniversity || (student.university as SupportedUniversity) || 'ISBAT University';
   const defaultVenues = getUniversityCampusVenues(activeUni);
 
   const [courseCode, setCourseCode] = useState(

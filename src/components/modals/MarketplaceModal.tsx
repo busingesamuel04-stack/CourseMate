@@ -9,14 +9,18 @@ import {
   Check,
   User,
 } from 'lucide-react';
-import { MarketplaceItem } from '../../types';
+import { MarketplaceItem, SupportedUniversity } from '../../types';
 import { getUniversityCampusVenues } from '../../data/mockData';
 
 export const MarketplaceModal: React.FC = () => {
   const { modalData, closeModal, triggerCelebration, selectedUniversity, student } = useApp();
   const item: MarketplaceItem = modalData;
 
-  const activeUni = (item && item.university) || selectedUniversity || student.university || 'ISBAT University';
+  const activeUni: SupportedUniversity =
+    (item?.university as SupportedUniversity) ||
+    selectedUniversity ||
+    (student.university as SupportedUniversity) ||
+    'ISBAT University';
   const campusMeetupVenues = getUniversityCampusVenues(activeUni);
 
   const [activeTab, setActiveTab] = useState<'details' | 'make-offer'>('details');
