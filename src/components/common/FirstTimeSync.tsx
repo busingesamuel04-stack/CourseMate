@@ -73,7 +73,15 @@ export const FirstTimeSync: React.FC<FirstTimeSyncProps> = ({
   }, [isScrapePending]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#090A0E] text-white px-6 select-none overflow-hidden">
+    <div
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#090A0E] text-white px-6 select-none overflow-hidden"
+      style={{
+        paddingTop: 'max(1.5rem, env(safe-area-inset-top, 0px))',
+        paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))',
+        paddingLeft: 'max(1.5rem, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(1.5rem, env(safe-area-inset-right, 0px))',
+      }}
+    >
       {/* Background radial gradient glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.14)_0%,transparent_65%)] pointer-events-none" />
 

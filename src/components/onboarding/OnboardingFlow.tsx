@@ -211,7 +211,15 @@ export const OnboardingFlow: React.FC = () => {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-[#090A0E] text-white flex flex-col justify-between p-4 sm:p-6 lg:p-8 relative overflow-hidden font-sans select-none">
+    <div
+      className="min-h-[100dvh] bg-[#090A0E] text-white flex flex-col justify-between p-4 sm:p-6 lg:p-8 relative overflow-hidden font-sans select-none"
+      style={{
+        paddingTop: 'max(1rem, env(safe-area-inset-top, 0px))',
+        paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))',
+        paddingLeft: 'max(1rem, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(1rem, env(safe-area-inset-right, 0px))',
+      }}
+    >
       {/* Ambient glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-indigo-600/15 via-violet-600/10 to-transparent blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[300px] bg-gradient-to-t from-emerald-600/10 via-cyan-600/5 to-transparent blur-3xl pointer-events-none" />

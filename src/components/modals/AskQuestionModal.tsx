@@ -22,15 +22,24 @@ export const AskQuestionModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in">
-      <div className="bg-[#13141D] border border-white/[0.1] w-full max-w-lg p-6 shadow-2xl space-y-5 rounded-3xl text-white">
-        <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md animate-in fade-in"
+      style={{
+        paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
+        paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))',
+        paddingLeft: 'max(0.75rem, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(0.75rem, env(safe-area-inset-right, 0px))',
+      }}
+    >
+      <div className="bg-[#13141D] border border-white/[0.1] w-full max-w-lg max-h-[min(90dvh,calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem))] shadow-2xl rounded-3xl flex flex-col overflow-hidden text-white">
+        {/* Header */}
+        <div className="shrink-0 flex items-center justify-between p-5 sm:p-6 pb-4 border-b border-white/[0.08]">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
               <MessageSquare className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white">
+              <h2 className="text-base sm:text-lg font-bold text-white">
                 Ask a Course Question
               </h2>
               <p className="text-xs text-zinc-400 font-medium">
@@ -47,7 +56,8 @@ export const AskQuestionModal: React.FC = () => {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+        {/* Scrollable Form Body */}
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 text-xs">
           <div>
             <label className="block text-[11px] font-bold text-zinc-300 uppercase tracking-wider mb-1.5">
               Associated Course
@@ -93,6 +103,7 @@ export const AskQuestionModal: React.FC = () => {
             />
           </div>
 
+          {/* Form Actions Footer */}
           <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between">
             <span className="text-[11px] text-zinc-400">
               Posting as <strong className="text-zinc-200">{student.name}</strong>

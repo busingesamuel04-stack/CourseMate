@@ -344,9 +344,15 @@ export const AlertCenter: React.FC<AlertCenterProps> = ({ isOpen, onClose, onNav
       <div
         ref={drawerRef}
         className="fixed top-0 right-0 z-50 h-full w-full max-w-sm bg-[#0E0F1A] border-l border-white/[0.08] shadow-2xl flex flex-col animate-in slide-in-from-right duration-300"
+        style={{
+          paddingTop: 'env(safe-area-inset-top, 0px)',
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          paddingLeft: 'env(safe-area-inset-left, 0px)',
+          paddingRight: 'env(safe-area-inset-right, 0px)',
+        }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+        <div className="shrink-0 flex items-center justify-between p-4 border-b border-white/[0.06]">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center shadow-md shadow-indigo-500/20">
               <Bell className="w-4 h-4 text-white" />
@@ -473,7 +479,7 @@ export const AlertCenter: React.FC<AlertCenterProps> = ({ isOpen, onClose, onNav
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/[0.06]">
+        <div className="shrink-0 p-4 border-t border-white/[0.06]">
           <p className="text-[10px] text-zinc-600 text-center">
             CourseMate monitors your university portal for changes and alerts you instantly.
           </p>

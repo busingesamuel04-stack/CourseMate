@@ -423,10 +423,18 @@ const PaperPreviewModal: React.FC<PaperPreviewModalProps> = ({ paper, onClose, o
   const isMockUrl = !paper.file_url || paper.file_url === '#' || paper.file_url.includes('example.com') || paper.file_url.includes('mock');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-[#12131F] border border-white/[0.12] rounded-[28px] shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+      style={{
+        paddingTop: 'max(0.75rem, env(safe-area-inset-top, 0px))',
+        paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))',
+        paddingLeft: 'max(0.75rem, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(0.75rem, env(safe-area-inset-right, 0px))',
+      }}
+    >
+      <div className="bg-[#12131F] border border-white/[0.12] rounded-[28px] shadow-2xl w-full max-w-2xl max-h-[min(90dvh,calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem))] flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
         {/* Header */}
-        <div className="p-5 border-b border-white/[0.08] flex items-center justify-between bg-white/[0.02]">
+        <div className="shrink-0 p-5 border-b border-white/[0.08] flex items-center justify-between bg-white/[0.02]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 font-extrabold text-sm">
               <FileText className="w-5 h-5" />

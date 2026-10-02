@@ -346,9 +346,17 @@ export const NotificationsDrawer: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/60 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-md h-full bg-[#10111A] border-l border-white/[0.08] shadow-2xl flex flex-col justify-between overflow-y-auto text-white">
+      <div
+        className="relative w-full max-w-md h-full bg-[#10111A] border-l border-white/[0.08] shadow-2xl flex flex-col text-white"
+        style={{
+          paddingTop: 'env(safe-area-inset-top, 0px)',
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          paddingLeft: 'env(safe-area-inset-left, 0px)',
+          paddingRight: 'env(safe-area-inset-right, 0px)',
+        }}
+      >
         {/* Top Header */}
-        <div className="p-4 sm:p-5 border-b border-white/[0.08] space-y-3">
+        <div className="shrink-0 p-4 sm:p-5 border-b border-white/[0.08] space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30 ring-1 ring-white/10">
@@ -681,7 +689,7 @@ export const NotificationsDrawer: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/[0.08] text-center bg-[#0D0E16]">
+        <div className="shrink-0 p-4 border-t border-white/[0.08] text-center bg-[#0D0E16]">
           <p className="text-[11px] text-zinc-400 font-medium">
             CourseMate monitors university portals to protect your academic standing.
           </p>
