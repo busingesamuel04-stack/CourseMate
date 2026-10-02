@@ -125,9 +125,9 @@ export const HomeScreen: React.FC = () => {
       : 'No upcoming deadlines';
 
   return (
-    <div className="min-h-[100dvh] w-full px-4 pt-4 pb-32 overflow-y-auto space-y-6">
+    <div className="w-full space-y-6 max-w-4xl mx-auto">
       {/* 1. HERO CANOPY (Dark Canvas with Soft Lavender/Blue Mesh Gradient and iOS Liquid Pill) */}
-      <section className="relative w-full gradient-coral-mesh pt-20 sm:pt-24 pb-8 sm:pb-10 px-5 sm:px-8 text-white overflow-hidden rounded-b-[40px] sm:rounded-b-[48px] border-b border-white/[0.08]">
+      <section className="relative w-full gradient-coral-mesh pt-5 sm:pt-7 pb-6 sm:pb-8 px-4 sm:px-8 text-white overflow-hidden rounded-3xl border border-white/[0.08] shadow-xl">
         {/* Subtle decorative ambient curves */}
         <div className="absolute -right-16 -top-16 w-72 h-72 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none" />
         <div className="absolute -left-10 -bottom-10 w-64 h-64 rounded-full bg-violet-600/15 blur-3xl pointer-events-none" />
@@ -165,7 +165,7 @@ export const HomeScreen: React.FC = () => {
       </section>
 
       {/* Main Content Area */}
-      <div className="space-y-6 max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="space-y-6">
 
         {/* Guest Mode / Unsynced Portal Prompt Banner */}
         {!student?.isSynced && (

@@ -127,10 +127,10 @@ export const BottomNav: React.FC = () => {
       )}
 
       {/* Floating Dark Dock Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none pb-[calc(env(safe-area-inset-bottom)+0.75rem)] px-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] px-3 sm:px-4">
         <nav
           aria-label="Mobile Navigation"
-          className="bg-[#141522]/90 backdrop-blur-2xl border border-white/[0.09] shadow-2xl max-w-[340px] mx-auto h-16 rounded-[36px] px-2.5 flex items-center justify-around pointer-events-auto"
+          className="bg-[#141522]/95 backdrop-blur-2xl border border-white/[0.09] shadow-2xl max-w-[360px] w-[94%] sm:w-auto mx-auto h-14 sm:h-16 rounded-[36px] px-2 flex items-center justify-around pointer-events-auto shadow-hi-fi-floating"
         >
           {tabs.map(({ label, tab, icon: Icon }) => {
             const isActive = currentTab === tab;

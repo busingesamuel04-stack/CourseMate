@@ -6,6 +6,7 @@ import {
   RefreshCw,
   ChevronDown,
   Download,
+  Smartphone,
   CreditCard,
   CheckCircle2,
   AlertCircle,
@@ -673,7 +674,35 @@ export const ProfileScreen: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Display Settings & Mode Indicator */}
+      {/* 4. Progressive Web App (PWA) Mobile Install */}
+      <section className="ios-liquid-card p-5 sm:p-6 card-soft-hover flex flex-col sm:flex-row sm:items-center justify-between gap-4 liquid-sheen border border-indigo-500/25 bg-gradient-to-r from-indigo-950/20 via-[#13141F] to-violet-950/20 shadow-hi-fi-md">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">
+              <Smartphone className="w-4 h-4" />
+            </div>
+            <h2 className="text-base font-extrabold text-white">
+              Install CourseMate App
+            </h2>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+              PWA
+            </span>
+          </div>
+          <p className="text-xs text-zinc-400 font-medium">
+            Install to home screen on Google Chrome, Android, or iPhone for instant fullscreen launch and offline timetable access.
+          </p>
+        </div>
+
+        <button
+          onClick={() => window.dispatchEvent(new CustomEvent('coursemate:open-install'))}
+          className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-full text-xs font-bold transition-all shadow-md shadow-indigo-600/30 flex items-center justify-center gap-1.5 cursor-pointer shrink-0 active:scale-95"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span>Add to Home Screen</span>
+        </button>
+      </section>
+
+      {/* 5. Display Settings & Mode Indicator */}
       <section className="ios-liquid-card p-5 sm:p-6 card-soft-hover flex items-center justify-between liquid-sheen">
         <div>
           <h2 className="text-base font-extrabold text-white">

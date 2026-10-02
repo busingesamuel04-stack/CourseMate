@@ -170,7 +170,7 @@ const MainLayout: React.FC = () => {
 
       <div className="lg:pl-64">
         <div className="mx-auto max-w-7xl">
-          <main className={`flex-1 min-w-0 pb-24 md:pb-12 ${currentTab === 'home' ? 'pt-0 px-0' : 'pt-20 px-4 sm:px-6 py-6'}`}>
+          <main className="flex-1 min-w-0 pt-[calc(env(safe-area-inset-top,0px)+4.25rem)] pb-[calc(env(safe-area-inset-bottom,0px)+6.5rem)] px-3 sm:px-6 md:pb-16 pl-[max(0.75rem,env(safe-area-inset-left,0px))] pr-[max(0.75rem,env(safe-area-inset-right,0px))]">
             {renderActiveTab()}
           </main>
         </div>

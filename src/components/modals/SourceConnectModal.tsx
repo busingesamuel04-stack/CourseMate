@@ -150,7 +150,7 @@ export const SourceConnectModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-lg bg-[#12131F] border border-white/[0.1] rounded-[28px] p-6 sm:p-7 shadow-2xl space-y-5 text-white max-h-[92vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-[#12131F] border border-white/[0.1] rounded-[28px] p-6 sm:p-7 shadow-2xl space-y-5 text-white modal-sheet-dynamic overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
           <div className="flex items-center gap-2">

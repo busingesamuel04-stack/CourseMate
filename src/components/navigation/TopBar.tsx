@@ -8,6 +8,7 @@ import {
   Sparkles,
   Calendar,
   WifiOff,
+  Download,
 } from 'lucide-react';
 import { TabType } from '../../types';
 import { exportScheduleToIcs } from '../../utils/calendarExport';
@@ -59,8 +60,11 @@ export const TopBar: React.FC = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-30 w-full bg-[#090A0E]/90 backdrop-blur-2xl border-b border-white/[0.08] transition-colors">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:px-6 gap-2 sm:gap-4">
+    <header
+      className="fixed top-0 left-0 right-0 z-40 w-full bg-[#090A0E]/95 backdrop-blur-2xl border-b border-white/[0.08] transition-colors"
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+    >
+      <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-3 sm:px-6 gap-2 sm:gap-4 pl-[max(0.75rem,env(safe-area-inset-left,0px))] pr-[max(0.75rem,env(safe-area-inset-right,0px))]">
         {/* Zone 1: CourseMate Wordmark & Brand */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button
@@ -177,6 +181,17 @@ export const TopBar: React.FC = () => {
             <span className="hidden sm:inline">AI Tutor</span>
           </button>
 
+          {/* PWA Install Trigger button (Visible on all devices, triggers prompt or Chrome guide) */}
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('coursemate:open-install'))}
+            className="bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 text-indigo-300 hover:text-white flex h-8 sm:h-9 items-center justify-center gap-1.5 rounded-full px-2.5 sm:px-3 text-xs font-bold transition-all shadow-sm shrink-0 cursor-pointer active:scale-95"
+            title="Install CourseMate PWA on your device"
+            aria-label="Install App"
+          >
+            <Download className="h-3.5 w-3.5 text-indigo-400 shrink-0" />
+            <span className="text-[11px]">Install</span>
+          </button>
+
           {/* Quick Add Action */}
           <button
             onClick={() => openModal('add-task')}
@@ -191,12 +206,12 @@ export const TopBar: React.FC = () => {
           {/* 1-Tap Calendar Export (.ics) */}
           <button
             onClick={handleExportCalendar}
-            className="bg-[#13141F] hover:bg-[#1E202E] border border-white/[0.08] text-zinc-300 hover:text-white flex h-8 sm:h-9 items-center justify-center gap-1.5 rounded-full px-2.5 sm:px-3 text-xs font-bold transition-all shadow-sm shrink-0 cursor-pointer"
+            className="hidden md:flex bg-[#13141F] hover:bg-[#1E202E] border border-white/[0.08] text-zinc-300 hover:text-white h-8 sm:h-9 items-center justify-center gap-1.5 rounded-full px-2.5 sm:px-3 text-xs font-bold transition-all shadow-sm shrink-0 cursor-pointer"
             title="Export Academic Schedule to .ics (Google & Apple Calendar)"
             aria-label="Export Academic Schedule to Calendar"
           >
             <Calendar className="h-3.5 w-3.5 text-indigo-400 shrink-0" />
-            <span className="hidden sm:inline text-[11px]">.ics</span>
+            <span className="text-[11px]">.ics</span>
           </button>
 
           {/* Notifications Button */}

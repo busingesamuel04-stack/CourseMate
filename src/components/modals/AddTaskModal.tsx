@@ -42,7 +42,7 @@ export const AddTaskModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-md bg-[#161826] border border-white/[0.1] rounded-[32px] p-6 sm:p-7 shadow-2xl space-y-4 text-white">
+      <div className="relative w-full max-w-md bg-[#161826] border border-white/[0.1] rounded-[32px] p-6 sm:p-7 shadow-2xl space-y-4 text-white modal-sheet-dynamic overflow-y-auto">
         <div className="flex items-center justify-between pb-1 border-b border-white/[0.08]">
           <div>
             <h2 className="text-base font-extrabold text-white">

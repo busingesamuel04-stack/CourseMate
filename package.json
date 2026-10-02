@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx server.ts",
     "build": "vite build",
-    "build:backend": "esbuild server.ts --bundle --platform=node --format=esm --outfile=dist/server.js --external:playwright --external:@supabase/supabase-js --external:@google/genai --external:express --external:dotenv --external:cheerio --external:canvas-confetti '--banner:js=import { createRequire } from module; const require = createRequire(import.meta.url);'",
+    "build:backend": "esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/server.js \"--banner:js=import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
     "start": "tsx server.ts",
     "start:prod": "node dist/server.js",
     "preview": "vite preview",

@@ -12,6 +12,22 @@
     --accent-lavender: #818CF8;
     --accent-violet: #8B5CF6;
     --accent-blue: #38BDF8;
+
+    /* Hardware Safe Area Inset Tokens (Notch, Dynamic Island, Home Bar, Camera Punch Holes) */
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+    --topbar-height: calc(3.5rem + var(--sat));
+    --bottom-dock-height: calc(4.75rem + var(--sab));
+  }
+
+  html {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    height: 100%;
+    height: -webkit-fill-available;
   }
 
   body {
@@ -22,12 +38,23 @@
     font-variant-numeric: tabular-nums;
     background-color: #090A0E;
     color: #FFFFFF;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    overscroll-behavior-y: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
     letter-spacing: -0.025em;
   }
+}
+
+/* Dynamic Safe Layout Utilities for all phones */
+.modal-sheet-dynamic {
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 2rem);
 }
 
 /* Custom smooth dark scrollbar */
