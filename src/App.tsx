@@ -30,6 +30,7 @@ import { AskQuestionModal } from './components/modals/AskQuestionModal';
 import { CampusEventModal } from './components/modals/CampusEventModal';
 import { CommunityDetailModal } from './components/modals/CommunityDetailModal';
 import { OnboardingFlow } from './components/onboarding/OnboardingFlow';
+import { PWAInstallBanner } from './components/common/PWAInstallBanner';
 import { registerServiceWorker } from './services/notifications';
 
 const MainLayout: React.FC = () => {
@@ -154,6 +155,7 @@ const MainLayout: React.FC = () => {
         </div>
 
         <InformationFlowBanner />
+        <PWAInstallBanner />
         {renderActiveModal()}
       </div>
     );
@@ -176,6 +178,7 @@ const MainLayout: React.FC = () => {
 
       <BottomNav />
       <InformationFlowBanner />
+      <PWAInstallBanner />
       {renderActiveModal()}
     </div>
   );

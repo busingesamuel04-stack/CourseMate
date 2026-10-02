@@ -11,25 +11,47 @@ export default defineConfig(() => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
+        includeAssets: ['icon.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'icon-192.png', 'icon-512.png'],
         manifest: {
-          name: 'CourseMate',
+          id: '/',
+          name: 'CourseMate — Academic Command Center',
           short_name: 'CourseMate',
           description: 'Fast, lightweight student portal & academic tracker',
           theme_color: '#090A0E',
           background_color: '#090A0E',
           display: 'standalone',
+          orientation: 'portrait-primary',
+          start_url: '/',
+          scope: '/',
           icons: [
             {
               src: '/pwa-192x192.png',
               sizes: '192x192',
               type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'maskable',
             },
             {
               src: '/pwa-512x512.png',
               sizes: '512x512',
               type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable',
             },
           ],
+        },
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
         },
       }),
     ],
